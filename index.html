@@ -2,24 +2,109 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<title>POINT-00-01</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>POINT: 00:01 — DEMO</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0b0b0b">
 <style>
-body{margin:0;background:#0b0b0b;color:#eaeaea;font-family:sans-serif}
-.screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
-button{margin-top:16px;padding:12px 18px;background:#111;color:#fff;border:1px solid #333;border-radius:10px}
+body {
+  margin: 0;
+  background: black;
+  color: #e0e0e0;
+  font-family: Arial, sans-serif;
+}
+#game {
+  padding: 20px;
+}
+button {
+  display: block;
+  margin: 10px 0;
+  padding: 12px;
+  width: 100%;
+  background: #111;
+  color: #fff;
+  border: 1px solid #444;
+  font-size: 16px;
+}
+button:hover {
+  background: #222;
+}
+#title {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
 </style>
 </head>
 <body>
-<div class="screen">
-<h1>POINT: 00:01</h1>
-<p>DEMO версия</p>
-<button onclick="alert('DEMO окончена')">Продолжить</button>
+
+<div id="game">
+  <div id="title">POINT-00-01</div>
+  <div id="text"></div>
+  <div id="choices"></div>
 </div>
+
 <script>
-if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}
+let state = 0;
+
+const scenes = {
+  0: {
+    text: "Ты просыпаешься в темноте. Телефон в руке. Связи нет. На экране — надпись: POINT-00-01.",
+    choices: [
+      { text: "Осмотреться", next: 1 },
+      { text: "Посмотреть в телефон", next: 2 }
+    ]
+  },
+  1: {
+    text: "Комната пуста. Но ты чувствуешь — ты здесь не один.",
+    choices: [
+      { text: "Позвать кого-то", next: 3 },
+      { text: "Замереть и слушать", next: 4 }
+    ]
+  },
+  2: {
+    text: "Экран мигает. Сообщение: «ТЫ СДЕЛАЛ ПЕРВЫЙ ВЫБОР».",
+    choices: [
+      { text: "Продолжить", next: 1 }
+    ]
+  },
+  3: {
+    text: "Твой голос тонет в темноте. Ответа нет.",
+    choices: [
+      { text: "Назад", next: 1 }
+    ]
+  },
+  4: {
+    text: "Ты слышишь дыхание. Оно не твоё.",
+    choices: [
+      { text: "Бежать", next: 5 },
+      { text: "Обернуться", next: 6 }
+    ]
+  },
+  5: {
+    text: "Ты бежишь. Экран гаснет. КОНЕЦ ДЕМО.",
+    choices: []
+  },
+  6: {
+    text: "Ты видишь силуэт. Игра только начинается...",
+    choices: []
+  }
+};
+
+function render() {
+  document.getElementById("text").innerText = scenes[state].text;
+  const choicesDiv = document.getElementById("choices");
+  choicesDiv.innerHTML = "";
+  scenes[state].choices.forEach(c => {
+    const btn = document.createElement("button");
+    btn.innerText = c.text;
+    btn.onclick = () => {
+      state = c.next;
+      render();
+    };
+    choicesDiv.appendChild(btn);
+  });
+}
+
+render();
 </script>
+
 </body>
 </html>
