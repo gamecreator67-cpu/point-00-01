@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POINT: 00:01 — DEMO</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0b0b">
+<style>
+body{margin:0;background:#0b0b0b;color:#eaeaea;font-family:sans-serif}
+.screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+button{margin-top:16px;padding:12px 18px;background:#111;color:#fff;border:1px solid #333;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="screen">
+<h1>POINT: 00:01</h1>
+<p>DEMO версия</p>
+<button onclick="alert('DEMO окончена')">Продолжить</button>
+</div>
+<script>
+if('serviceWorker'in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
+</body>
+</html>
